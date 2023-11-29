@@ -23,6 +23,19 @@ class _ExampleAppState extends State<ExampleApp> {
   late WebAuthentication webAuth;
   late Auth0Web auth0Web;
 
+  static const Map<String, Set<String>> authScopes = {
+    'auth': {'openid', 'profile', 'offline_access'},
+    'mfa': {'enroll', 'read:authenticators', 'remove:authenticators'},
+    'all': {
+      'openid',
+      'profile',
+      'offline_access',
+      'enroll',
+      'read:authenticators',
+      'remove:authenticators'
+    }
+  };
+
   @override
   void initState() {
     super.initState();
@@ -53,7 +66,12 @@ class _ExampleAppState extends State<ExampleApp> {
             audience: dotenv.env['AUTH0_AUDIENCE']);
       }
 
-      final result = await webAuth.login();
+      final result = await webAuth.login(
+        safariViewController: const SafariViewController(),
+        redirectUrl: dotenv.env['AUTH0_REDIRECT_URI'],
+        audience: dotenv.env['AUTH0_AUDIENCE'],
+        scopes: authScopes['auth']!,
+      );
 
       output = result.idToken;
     } catch (e) {
