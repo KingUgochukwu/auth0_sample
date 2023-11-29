@@ -67,7 +67,7 @@ class _ExampleAppState extends State<ExampleApp> {
       }
 
       final result = await webAuth.login(
-        safariViewController: const SafariViewController(),
+        // safariViewController: const SafariViewController(),
         redirectUrl: dotenv.env['AUTH0_REDIRECT_URI'],
         audience: dotenv.env['AUTH0_AUDIENCE'],
         scopes: authScopes['auth']!,
