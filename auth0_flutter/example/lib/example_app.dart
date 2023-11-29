@@ -48,7 +48,9 @@ class _ExampleAppState extends State<ExampleApp> {
     // We also handle the message potentially returning null.
     try {
       if (kIsWeb) {
-        return auth0Web.loginWithRedirect(redirectUrl: 'http://localhost:3000');
+        return auth0Web.loginWithRedirect(
+            redirectUrl: 'http://localhost:8081',
+            audience: dotenv.env['AUTH0_AUDIENCE']);
       }
 
       final result = await webAuth.login();
